@@ -3,12 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <title>Agenda de Contatos</title>
-<link rel="icon" href="imagens/teste-agenda.png" />
+<link rel="icon" href="imagens/telefone.png" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<h1>Criar novo contato</h1>
-	<form action="" name="frmContato">
+	<div id="navigation" class="navigation">
+		<ul>
+			<li><a href="index.html"><img alt="home" src="imagens/new-home.png" /></a></li>
+			<li><a href="agenda.jsp"><img alt="agenda" src="imagens/phone-book.png" /></a></li>
+			<li id="threeline-icon" class="threeline-icon" />
+		</ul>
+	</div>
+	<h1 class="novoContato">Criar novo contato</h1>
+	<form action="insert" name="frmContato">
 		<table>
 			<tr>
 				<td><input type="text" name="nome" placeholder="Nome" class="caixa1" /></td>
@@ -20,11 +27,11 @@
 				<td><input type="text" name="email" placeholder="E-mail" class="caixa1" /></td>
 			</tr>						
 		</table>
-		<input type="button" value="Adicionar" class="botao1" />
+		<input type="button" value="Adicionar" class="botao1" onclick="validar()" />
 	</form>
 	<div class="footer">
-  		<p>Projeto Didático - Desenvolvido em JSP + Servlets + JDBC</p>
-  		<p>Desenvolvido por Ezandro Bueno</p>
-	</div>		
+  		<span class="footer-copy">&copy; 2021 Ezandro Bueno. Todos os direitos reservados.</span>	
+	</div>
+	<script src="scripts/validador.js"></script>	
 </body>
 </html>

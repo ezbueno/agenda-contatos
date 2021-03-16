@@ -69,4 +69,25 @@ public class AgendaDAO {
 		return contatos;
 	}
 	
+	public void selecionarContato(AgendaBean contato) {
+		String read2 = "SELECT * FROM contatos WHERE idcon = ?";
+		
+		try {
+			Connection con = conectar();
+			PreparedStatement statement = con.prepareStatement(read2);
+			statement.setString(1, contato.getIdcon());
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				contato.setIdcon(rs.getString("idcon"));
+				contato.setNome(rs.getString("nome"));
+				contato.setFone(rs.getString("fone"));
+				contato.setEmail(rs.getString("email"));
+			}
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 }

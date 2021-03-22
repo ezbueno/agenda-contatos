@@ -90,4 +90,21 @@ public class AgendaDAO {
 		}
 	}
 	
+	public void alterarContato(AgendaBean contato) {
+		String update = "UPDATE contatos SET nome = ?, fone = ?, email = ? WHERE idcon = ?";
+		
+		try {
+			Connection con = conectar();
+			PreparedStatement statement = con.prepareStatement(update);
+			statement.setString(1, contato.getNome());
+			statement.setString(2, contato.getFone());
+			statement.setString(3, contato.getEmail());
+			statement.setString(4, contato.getIdcon());
+			statement.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 }

@@ -19,7 +19,7 @@
 		</ul>
 	</div>
 	<h1 class="novoContato">Editar contato</h1>
-	<form action="" name="frmContato">
+	<form action="update" name="frmContato">
 		<table>
 			<tr>
 				<td><input type="text" name="idcon" id="caixa3"

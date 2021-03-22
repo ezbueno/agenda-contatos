@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import agenda.model.AgendaBean;
 import agenda.model.AgendaDAO;
 
-@WebServlet(urlPatterns = {"/AgendaController", "/main", "/insert", "/select"})
+@WebServlet(urlPatterns = {"/AgendaController", "/main", "/insert", "/select", "/update"})
 public class AgendaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -33,6 +33,8 @@ public class AgendaController extends HttpServlet {
 			novoContato(request, response);
 		} else if(action.equals("/select")) {
 			listarContato(request, response);
+		} else if(action.equals("/update")) {
+			editarContato(request, response);
 		} else {
 			response.sendRedirect("index.html");
 		}
@@ -68,6 +70,17 @@ public class AgendaController extends HttpServlet {
 				
 		RequestDispatcher rd = request.getRequestDispatcher("editar.jsp");
 		rd.forward(request, response);
+	}
+	
+	protected void editarContato(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		contato.setIdcon(request.getParameter("idcon"));
+		contato.setNome(request.getParameter("nome"));
+		contato.setFone(request.getParameter("fone"));
+		contato.setEmail(request.getParameter("email"));
+		
+		agendaDAO.alterarContato(contato);
+		
+		response.sendRedirect("main");
 	}
 
 }

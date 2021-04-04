@@ -10,10 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import agenda.model.AgendaBean;
 import agenda.model.AgendaDAO;
 
-@WebServlet(urlPatterns = {"/AgendaController", "/main", "/insert", "/select", "/update", "/delete"})
+@WebServlet(urlPatterns = {"/AgendaController", "/main", "/insert", "/select", "/update", "/delete", "/report"})
 public class AgendaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -37,6 +43,8 @@ public class AgendaController extends HttpServlet {
 			editarContato(request, response);
 		} else if(action.equals("/delete")) {
 			removerContato(request, response);
+		} else if(action.equals("/report")) {
+			gerarRelatorio(request, response);
 		} else {
 			response.sendRedirect("index.html");
 		}
@@ -91,6 +99,45 @@ public class AgendaController extends HttpServlet {
 		agendaDAO.deletarContato(contato);
 		
 		response.sendRedirect("main");
+	}
+	
+	protected void gerarRelatorio(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Document documento = new Document();
+		
+		try {
+			response.setContentType("apllication/pdf");
+			response.addHeader("Content-Disposition", "inline; filename=" + "contatos.pdf");
+			
+			PdfWriter.getInstance(documento, response.getOutputStream());
+			
+			documento.open();
+			documento.add(new Paragraph("Lista de Contatos:"));
+			documento.add(new Paragraph(" "));
+			
+			PdfPTable tabela = new PdfPTable(3);
+			PdfPCell col1 = new PdfPCell(new Paragraph("Nome"));
+			PdfPCell col2 = new PdfPCell(new Paragraph("Telefone"));
+			PdfPCell col3 = new PdfPCell(new Paragraph("E-mail"));
+			
+			tabela.addCell(col1);
+			tabela.addCell(col2);
+			tabela.addCell(col3);
+			
+			List<AgendaBean> lista = agendaDAO.listarContatos();
+			
+			for(int i = 0; i < lista.size(); i++) {
+				tabela.addCell(lista.get(i).getNome());
+				tabela.addCell(lista.get(i).getFone());
+				tabela.addCell(lista.get(i).getEmail());
+			}
+			
+			documento.add(tabela);
+			documento.close();
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			documento.close();
+		}
 	}
 
 }

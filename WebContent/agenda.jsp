@@ -39,13 +39,16 @@
 					<td><%=lista.get(i).getNome()%></td>
 					<td><%=lista.get(i).getFone()%></td>
 					<td><%=lista.get(i).getEmail()%></td>
-					<td><a href="select?idcon=<%=lista.get(i).getIdcon()%>" class="botao1">Editar</a></td>
+					<td><a href="select?idcon=<%=lista.get(i).getIdcon()%>" class="botao1">Editar</a>
+						<a href="javascript: confirmar(<%=lista.get(i).getIdcon()%>)" class="botao2">Excluir</a>
+					</td>
 				</tr>
 			<%} %>
 		</tbody>
 	</table>
 	<div class="footer">
   		<span class="footer-copy">&copy; 2021 Ezandro Bueno. Todos os direitos reservados.</span>		
-	</div>		
+	</div>
+	<script src="scripts/confirmador.js"></script>
 </body>
 </html>

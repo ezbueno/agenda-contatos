@@ -107,4 +107,18 @@ public class AgendaDAO {
 		}
 	}
 	
+	public void deletarContato(AgendaBean contato) {
+		String delete = "DELETE FROM contatos WHERE idcon = ?";
+		
+		try {
+			Connection con = conectar();
+			PreparedStatement statement = con.prepareStatement(delete);
+			statement.setString(1, contato.getIdcon());
+			statement.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 }
